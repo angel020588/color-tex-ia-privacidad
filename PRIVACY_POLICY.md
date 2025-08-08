@@ -12,4 +12,4 @@ La información proporcionada se utiliza únicamente para mejorar la experiencia
 Esta política puede actualizarse ocasionalmente. Cualquier cambio será publicado en este repositorio.
 
 ## Contacto
-Si tienes dudas sobre esta política, contacta a: [fundaciondam2019@gmail.com
+Si tienes dudas sobre esta política, contacta a: fundaciondam2019@gmail.com

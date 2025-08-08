@@ -1,0 +1,83 @@
+openapi: 3.1.0
+info:
+  title: Color-Tex IA - Privacy Policy via GitHub API
+  description: |
+    API para obtener la política de privacidad desde un repositorio de GitHub
+    (público o privado) usando la API REST oficial con autenticación por token.
+  version: 1.0.0
+servers:
+  - url: https://api.github.com
+    description: API oficial de GitHub
+paths:
+  /repos/angel020588/color-tex-ia-privacidad/contents/PRIVACY_POLICY.md:
+    get:
+      operationId: fetchPrivacyPolicyMd
+      summary: Obtener la política de privacidad (Markdown) desde GitHub
+      description: |
+        Devuelve el archivo PRIVACY_POLICY.md codificado en Base64 desde el repositorio.
+        El contenido devuelto debe decodificarse de Base64 para obtener el Markdown.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: ref
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Rama o tag del repo (por defecto `main`).
+      responses:
+        '200':
+          description: Archivo encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitHubContent'
+        '404':
+          description: Archivo no encontrado
+        default:
+          description: Error inesperado
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: GitHubToken
+  schemas:
+    GitHubContent:
+      type: object
+      required:
+        - name
+        - path
+        - sha
+        - size
+        - download_url
+        - content
+        - encoding
+      properties:
+        name:
+          type: string
+          description: Nombre del archivo.
+          example: PRIVACY_POLICY.md
+        path:
+          type: string
+          description: Ruta dentro del repositorio.
+          example: PRIVACY_POLICY.md
+        sha:
+          type: string
+          description: SHA del archivo en GitHub.
+          example: 3d21ec53a331a6f037a91c368710b99387d012c1
+        size:
+          type: integer
+          description: Tamaño en bytes.
+          example: 5362
+        download_url:
+          type: string
+          format: uri
+          description: Enlace directo al archivo en raw.
+        content:
+          type: string
+          description: Contenido codificado en Base64.
+        encoding:
+          type: string
+          description: Codificación del contenido (normalmente `base64`).
+          example: base64
